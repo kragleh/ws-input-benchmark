@@ -5,7 +5,13 @@ const HomePage = () => {
   const [inputs, setInputs] = React.useState<{ inputName: string, time: number }[]>([])
 
   useEffect(() => {
-    const socket = new WebSocket('ws://localhost:3000/api/ws')
+    let url = process.env.NEXT_PUBLIC_WS_URL
+
+    if (!url) {
+      url = 'ws://localhost:3000/api/ws'
+    }
+
+    const socket = new WebSocket(url)
 
     socket.onopen = () => {
       console.log('WebSocket connected')
